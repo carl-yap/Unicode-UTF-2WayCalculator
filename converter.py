@@ -7,6 +7,10 @@ def hex2bin(digits):
 def bin2hex(bits):
     return hex(int(bits, 2))[2:].upper()
 
+def leftpad_z(digits, length):
+    n = len(digits)
+    return "0" * (length-n) + digits if n <= length else None
+
 # Unicode to UTF-8
 def to_utf8(digits):
     if int(digits, 16) > UTF8_UPPER_LIMIT:
@@ -49,6 +53,7 @@ def to_utf16(digits):
     else:
         unit = unit - 0x10000
         unit = hex2bin(hex(unit)[2:])
+        unit = leftpad_z(unit, 20)
         lower = int(bin2hex(unit[-10:]), 16) + 0xDC00
         upper = int(bin2hex(unit[:-10]), 16) + 0xD800
         unit = hex(upper)[2:] + hex(lower)[2:]
